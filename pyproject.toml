@@ -1,0 +1,11 @@
+[project]
+name = "prod"
+description = ''
+version = "0.0.1"
+dependencies = [
+    "aiogram==3.14.0",
+    "fastapi[standard]==0.115.4",
+    "sqlalchemy==2.0.36",
+    "dishka==1.4.0",
+    "httpx==0.27.2"
+]

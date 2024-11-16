@@ -1,0 +1,34 @@
+services:
+  postgresql:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql_volume:/var/lib/postgresql/data
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    environment:
+      POSTGRES_DB: prod_tmp
+      POSTGRES_USER: prod_tmp
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: prod_tmp
+
+  backend:
+    image: backend
+    command: python3 /app/src/prod/backend/run.py
+    ports:
+      - "8000:8000"
+
+  tg_bot:
+    image: backend
+    working_dir: /app
+    command: python3 /app/src/prod/tg_bot/run.py
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+volumes:
+  postgresql_volume:
